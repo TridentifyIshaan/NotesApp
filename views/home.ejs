@@ -1,0 +1,166 @@
+
+<%- include("partials/header") -%> 
+
+<% if (!isSearch) { %>
+<div class="notes-container">
+  <!-- Demo Note Block -->
+  <div class="note-block demo-note">
+    <div class="note-title">Demo Note</div>
+    <div class="note-content">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+    </div>
+    <div class="note-tags">Tags: Demo</div>
+  </div>
+  <% } %>
+  
+  <% if (notes.length !== 0) { %> <% notes.forEach(note => { %>
+  <div class="note-block">
+    <div class="note-title"><%= note.title %></div>
+    <div class="note-content">
+      <%= note.content.substring(0, 100) + "..." %>
+    </div>
+    <div class="note-actions">
+      <a href="/<%= note.title %>" class="read-more">Read More</a>
+      <div class="action-buttons">
+        <form action="/delete/<%= note._id %>" method="POST" style="margin: 0">
+          <button
+            type="submit"
+            class="delete-btn"
+            onclick="return confirm('Are you sure you want to delete this note?');"
+          >
+            Delete
+          </button>
+        </form>
+        <a href="/edit/<%= note._id %>" class="edit-btn">Edit</a>
+      </div>
+    </div>
+    <% if (note.tags.length > 0) { %>
+    <div class="note-tags">Tags: <%= note.tags.join(", ") %></div>
+    <% } %>
+    <div class="note-id">Note ID: <%= note._id %></div>
+    <!-- Display note ID -->
+  </div>
+  <% }); %> <% } %>
+</div>
+
+<style>
+  /* General Container Styling */
+  .notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+  }
+
+  /* Note Block Styling */
+  .note-block {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fdf473;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .note-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Demo Note Styling */
+  .demo-note {
+    background-color: #b8e2ff; /* Light blue background for demo */
+    border: 2px solid #90caf9; /* Slightly darker blue border */
+  }
+
+  .note-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .note-content {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+
+  .note-tags {
+    font-size: 13px;
+    color: #888;
+    margin-top: 10px;
+  }
+
+  .note-id {
+    font-size: 12px;
+    color: #555;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* Note Actions Styling */
+  .note-actions {
+    display: flex;
+    flex-direction: column; /* Stacks Read More and action buttons vertically */
+    align-items: flex-start; /* Aligns content to the left */
+    gap: 10px; /* Adds spacing between the Read More and action buttons */
+  }
+
+  /* Action Buttons Styling */
+  .action-buttons {
+    display: flex; /* Places Delete and Edit buttons side by side */
+    gap: 10px; /* Adds space between the buttons */
+  }
+
+  /* Read More Link Styling */
+  .read-more {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .read-more:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  /* Delete Button Styling */
+  .delete-btn {
+    background-color: #f44336; /* Red */
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+  .delete-btn:hover {
+    background-color: #d32f2f; /* Darker red */
+    transform: translateY(-2px);
+  }
+
+  /* Edit Button Styling */
+  .edit-btn {
+    background-color: #4caf50; /* Green */
+    color: #fff;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none; /* Removes underline */
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+
+  .edit-btn:hover {
+    background-color: #388e3c; /* Darker green */
+    transform: translateY(-2px);
+  }
+</style>

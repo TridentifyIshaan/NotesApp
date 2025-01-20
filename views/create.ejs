@@ -1,0 +1,114 @@
+<%- include("partials/header") -%>
+
+<style>
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-signin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-signin h2 {
+    margin-bottom: 20px;
+    color: #343a40;
+  }
+
+  .form-floating {
+    width: 100%;
+  }
+
+  .form-floating label {
+    color: #495057;
+    font-weight: bold;
+  }
+
+  /*Inputs*/
+  .form-floating input,
+  .form-floating textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px; /* Added margin for space between lables and inputs*/
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-floating input:focus,
+  .form-floating textarea:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+</style>
+
+<div class="container">
+  <div class="form-signin">
+    <h2>Create Note</h2>
+
+    <form action="/home" method="post">
+      <div class="form-floating mb-3">
+        <label for="floatingTitle"><strong>Title</strong></label>
+        <input
+          type="text"
+          name="title"
+          class="form-control"
+          id="floatingTitle"
+          placeholder="Title"
+          autocomplete="off"
+          required
+        />
+      </div>
+
+      <div class="form-floating mb-3">
+        <label for="floatingContent"><strong>Content</strong></label>
+        <textarea
+          rows="8"
+          columns="50"
+          name="content"
+          class="form-control"
+          id="floatingContent"
+          placeholder="Content"
+          autocomplete="off"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-floating mb-3">
+        <label for="floatingTags"><strong>Tags</strong></label>
+        <input
+          type="text"
+          name="tags"
+          class="form-control"
+          id="floatingTags"
+          placeholder="Tags"
+          autocomplete="off"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</div>

@@ -1,16 +1,33 @@
-const express=require("express");
-const bodyParser=require("body-parser");
-const mongoose=require("mongoose");
+import express from "express";
+import bodyParser from "body-parser";
+import methodOverride from "method-override";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import mongoose from "mongoose";
+import passport from "passport";
+import dotenv from "dotenv";
 
-const app=express();
+dotenv.config();
 
-// Middleware for parsing URL-encoded data and serving static files
-app.use(bodyParser.urlencoded({extended:true}));
+const app = express();
+const MongoStore = MongoStore(session);
+
+// Middleware setup
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static("public"));
 
 // Set the view engine to EJS for rendering html templates
 app.set('view engine', 'ejs');
-
 
 // Connect to MongoDB database 'noteDB' (create it if it doesn't exist)
 mongoose.connect("mongodb://localhost:27017/noteDB");
@@ -52,7 +69,6 @@ const noteSchema = new mongoose.Schema({
     },
   });
 
-
 //schema  of the user collection
   const userSchema = new mongoose.Schema({
     name: {
@@ -89,7 +105,6 @@ const Note=new mongoose.model('Note',noteSchema);
 app.get("/",function(req,res){
     res.render("signup");
 });
-
 
 // Route to handle user signup
 app.post("/signup", function(req, res) {
@@ -285,6 +300,11 @@ app.post("/edit/:noteID", (req, res) => {
             res.redirect("/home");
         });
 });
+
+// Routes setup
+// app.use("/", yourRoutes);
+
+export default app;
 
 // Start the server 
 app.listen(process.env.PORT || 3000, function(){

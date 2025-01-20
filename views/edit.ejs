@@ -1,0 +1,95 @@
+<%- include("partials/header") -%>
+
+<style>
+  .container {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    margin-bottom: 10px;
+    color: #495057;
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    margin-top: 5px; /* Added margin for space between labels and inputs */
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+</style>
+
+<div class="container">
+  <h1>Edit Note</h1>
+  <form action="/edit/<%= note._id %>" method="POST">
+    <div class="form-group">
+      <label for="title"><strong>Title</strong></label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        value="<%= note.title %>"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="content"><strong>Content</strong></label>
+      <textarea
+        id="content"
+        name="content"
+        class="form-control"
+        rows="5"
+        required
+      ><%= note.content %></textarea>
+    </div>
+    <div class="form-group">
+      <label for="tags"><strong>Tags (comma-separated)</strong></label>
+      <input
+        type="text"
+        id="tags"
+        name="tags"
+        class="form-control"
+        value="<%= note.tags.join(", ") %>"
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Update Note</button>
+  </form>
+</div>
